@@ -11,10 +11,6 @@ class HelloResolver {
 	hello() {
 		return "Hello World!";
 	}
-	@Query(() => String)
-	hi() {
-		return "hi!";
-	}
 }
 
 const main = async () => {
@@ -44,9 +40,7 @@ const main = async () => {
 
 	// Start Server
 	const port = process.env.PORT;
-	app.listen(Number(port), () =>
-		console.log(`🚀 Listening on https://localhost:${port}!`)
-	);
+	app.listen(Number(port), () => console.log(`🚀 Listening on port ${port}!`));
 };
 
 main();
