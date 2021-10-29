@@ -6,7 +6,8 @@
 - In Chrome, install [GraphQL Playground](https://chrome.google.com/webstore/detail/graphql-playground-for-ch/kjhjcgclphafojaeeickcokfbhlegecd) in chrome.
 
 ### How to run it
-- First, type `yarn watch` in the terminal. (Make sure you are in the same directory Amigo/server)
-- Second, type `yarn start` in a different terminal window. (Make sure you are in the same directory Amigo/server)
+- First, type `yarn install` in the terminal. (Make sure you are in the same directory Amigo/server) 
+- Second, type `yarn watch` in the terminal. (Make sure you are in the same directory Amigo/server)
+- Third, type `yarn start` in a different terminal window. (Make sure you are in the same directory Amigo/server)
 - Head to http://localhost:4000/graphql
 - Test it by typing `{hello}` in the playground window. Expect hello world! to be returned.
