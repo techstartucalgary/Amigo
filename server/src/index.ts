@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import { mongoose } from "@typegoose/typegoose";
 import "dotenv-safe/config";
 import cors from "cors";
 import express from "express";
@@ -53,6 +54,11 @@ class HelloResolver {
 }
 
 const main = async () => {
+	// Connecting to MongoDB
+	await mongoose
+		.connect(process.env.MONGO_URL)
+		.then(() => console.log("🚀 DB successfully connected!"));
+
 	// Creating instance of express server
 	const app = express();
 
