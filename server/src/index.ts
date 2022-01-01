@@ -1,5 +1,6 @@
 import "reflect-metadata";
 import { mongoose } from "@typegoose/typegoose";
+import { ConnectOptions } from "mongoose";
 import "dotenv-safe/config";
 import cors from "cors";
 import express from "express";
@@ -56,7 +57,12 @@ class HelloResolver {
 const main = async () => {
 	// Connecting to MongoDB
 	await mongoose
-		.connect(process.env.MONGO_URL)
+		.connect(process.env.MONGO_URL!, {
+			useNewUrlParser: true,
+			useCreateIndex: true,
+			useFindAndModify: false,
+			useUnifiedTopology: true,
+		} as ConnectOptions)
 		.then(() => console.log("🚀 DB successfully connected!"));
 
 	// Creating instance of express server
