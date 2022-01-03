@@ -3,7 +3,6 @@ import { ApolloServer } from "apollo-server-express";
 import cors from "cors";
 import "dotenv-safe/config";
 import express from "express";
-import { ConnectOptions } from "mongoose";
 import "reflect-metadata";
 import { buildSchema } from "type-graphql";
 import { UserResolver } from "./resolvers/UserResolver";
@@ -16,7 +15,7 @@ const main = async () => {
 			useCreateIndex: true,
 			useFindAndModify: false,
 			useUnifiedTopology: true,
-		} as ConnectOptions)
+		})
 		.then(() => console.log("🚀 DB successfully connected!"))
 		.catch((err) => console.error(err));
 
