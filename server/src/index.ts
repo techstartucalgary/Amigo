@@ -14,6 +14,7 @@ import {
 	Query,
 	Resolver,
 } from "type-graphql";
+import { UserResolver } from "./resolvers/UserResolver";
 
 @ObjectType()
 class UserType {
@@ -74,7 +75,7 @@ const main = async () => {
 	// Creating instance of Apollo Server
 	const apolloServer = new ApolloServer({
 		schema: await buildSchema({
-			resolvers: [HelloResolver],
+			resolvers: [UserResolver],
 			validate: false,
 		}),
 		context: ({ req, res }) => ({
