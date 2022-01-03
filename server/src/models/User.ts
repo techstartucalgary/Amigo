@@ -16,7 +16,7 @@ import { Field, ID, ObjectType } from "type-graphql";
 })
 @ModelOptions({ options: { allowMixed: 0 } })
 export class User {
-	@Field(() => ID, { description: "The user's ID." })
+	@Field(() => ID, { description: "The user's ID. " })
 	id: string;
 
 	@Field(() => String, { description: "The user's first name." })
@@ -36,10 +36,10 @@ export class User {
 		nullable: true,
 	})
 	@Prop()
-	pictures: Types.Array<string>;
+	pictures?: Types.Array<string>;
 
 	@Field(() => String, { description: "The user's university." })
-	@Prop({ required: true, unique: true })
+	@Prop({ required: true })
 	university: string;
 
 	@Field(() => String, { description: "The user's email." })
@@ -65,24 +65,25 @@ export class User {
 	passwordResetCode?: string;
 
 	@Field(() => Date, {
+		nullable: true,
 		description: "The user's date of birth.",
 	})
-	@Prop({ default: new Date(), required: true })
-	dateofBirth?: Date;
+	@Prop()
+	dateOfBirth?: Date;
 
 	@Field(() => [User], {
 		nullable: true,
 		description: "Users this user has liked.",
 	})
-	@Prop({ required: true })
-	users: Types.Array<User>;
+	@Prop({ default: [] })
+	liked?: Types.Array<User>;
 
 	@Field(() => [User], {
 		nullable: true,
 		description: "Users this user has matched with.",
 	})
-	@Prop({ required: true })
-	matches: Types.Array<User>;
+	@Prop({ default: [] })
+	matches?: Types.Array<User>;
 
 	@Field(() => String, { description: "The user's questionnaire answers." })
 	@Prop({ required: true, index: true })
@@ -104,7 +105,7 @@ export class User {
 	// chats: Types.Array<string>;
 
 	@Field(() => Boolean, { description: "The user's verified status" })
-	@Prop({ required: true })
+	@Prop({ default: false })
 	verified: boolean;
 
 	// @Field(() => [Activity], {
@@ -115,7 +116,7 @@ export class User {
 	// log: Types.Array<Activity>;
 
 	@Field(() => Number, { description: "The user's account status" })
-	@Prop({ required: true, index: true })
+	@Prop({ default: 1, index: true })
 	accountStatus: number;
 }
 
