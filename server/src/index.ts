@@ -1,59 +1,12 @@
-import "reflect-metadata";
 import { mongoose } from "@typegoose/typegoose";
-import { ConnectOptions } from "mongoose";
-import "dotenv-safe/config";
-import cors from "cors";
-import express from "express";
 import { ApolloServer } from "apollo-server-express";
-import {
-	Arg,
-	buildSchema,
-	Field,
-	Mutation,
-	ObjectType,
-	Query,
-	Resolver,
-} from "type-graphql";
+import cors from "cors";
+import "dotenv-safe/config";
+import express from "express";
+import { ConnectOptions } from "mongoose";
+import "reflect-metadata";
+import { buildSchema } from "type-graphql";
 import { UserResolver } from "./resolvers/UserResolver";
-
-@ObjectType()
-class UserType {
-	@Field(() => String)
-	name: string;
-	@Field(() => String)
-	major: string;
-}
-
-const users = [
-	{ name: "nurgul", major: "eng" },
-	{ name: "eugene", major: "eng" },
-	{ name: "zeyad", major: "cs" },
-];
-
-@Resolver()
-class HelloResolver {
-	@Query(() => String)
-	hello() {
-		return "Hello World!";
-	}
-	@Query(() => [UserType])
-	users() {
-		return users;
-	}
-	@Query(() => [UserType])
-	user(@Arg("major") major: String) {
-		const getUsers = [];
-		for (const user of users) {
-			if (user.major === major) getUsers.push(user);
-		}
-		return getUsers;
-	}
-	@Mutation(() => UserType)
-	AddUser(@Arg("major") major: string, @Arg("name") name: string) {
-		users.push({ name, major });
-		return { name, major };
-	}
-}
 
 const main = async () => {
 	// Connecting to MongoDB
@@ -64,7 +17,8 @@ const main = async () => {
 			useFindAndModify: false,
 			useUnifiedTopology: true,
 		} as ConnectOptions)
-		.then(() => console.log("🚀 DB successfully connected!"));
+		.then(() => console.log("🚀 DB successfully connected!"))
+		.catch((err) => console.error(err));
 
 	// Creating instance of express server
 	const app = express();
