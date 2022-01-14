@@ -6,7 +6,7 @@ import {
 } from "@typegoose/typegoose";
 import bcrypt from "bcrypt";
 import { Types } from "mongoose";
-import { Field, ID, Int, ObjectType } from "type-graphql";
+import { Field, ID, ObjectType } from "type-graphql";
 @ObjectType({ description: "The User Model." })
 @Pre<User>("save", async function () {
 	/* Only run if password was modified */
@@ -16,30 +16,31 @@ import { Field, ID, Int, ObjectType } from "type-graphql";
 })
 @ModelOptions({ options: { allowMixed: 0 } })
 export class User {
-	@Field(() => ID, { description: "The user's ID." })
+	@Field(() => ID, { description: "The user's ID. " })
 	id: string;
 
-    @Field(() => String, { description: "The user's first name."})
-    @Prop({ required: true})
-    firstName: string;
+	@Field(() => String, { description: "The user's first name." })
+	@Prop({ required: true })
+	firstName: string;
 
-    @Field(() => String, { description: "The user's last name."})
-    @Prop({ required: true})
-    lastName: string;
+	@Field(() => String, { description: "The user's last name." })
+	@Prop({ required: true })
+	lastName: string;
 
-    @Field(() => String, { description: "The user's bio."})
-    @Prop({ required: true, unique: true})
-    bio: string;
+	@Field(() => String, { description: "The user's bio." })
+	@Prop({ required: true, unique: true })
+	bio: string;
 
-    @Field(() => [String], { 
-        description: "URLs to the user's pictures,", 
-        nullable: true})
-    @Prop()
-    pictures: Types.Array<string>;
+	@Field(() => [String], {
+		description: "URLs to the user's pictures,",
+		nullable: true,
+	})
+	@Prop()
+	pictures?: Types.Array<string>;
 
-    @Field(() => String, { description: "The user's university."})
-    @Prop({ required: true, unique: true})
-    university: string;
+	@Field(() => String, { description: "The user's university." })
+	@Prop({ required: true })
+	university: string;
 
 	@Field(() => String, { description: "The user's email." })
 	@Prop({ required: true, unique: true, index: true })
@@ -54,7 +55,7 @@ export class User {
 		description: "The last date the user's password was reset.",
 	})
 	@Prop({ default: new Date() })
-	lastPasswordReset?: Date;	
+	lastPasswordReset?: Date;
 
 	@Field(() => String, {
 		nullable: true,
@@ -64,29 +65,30 @@ export class User {
 	passwordResetCode?: string;
 
 	@Field(() => Date, {
+		nullable: true,
 		description: "The user's date of birth.",
 	})
-	@Prop({ default: new Date(), required: true })
-	dateofBirth?: Date;
+	@Prop()
+	dateOfBirth?: Date;
 
 	@Field(() => [User], {
 		nullable: true,
-		description: "Users this user has liked." 
+		description: "Users this user has liked.",
 	})
-	@Prop({ required: true })
-	users: Types.Array<User>;
+	@Prop({ default: [] })
+	liked?: Types.Array<User>;
 
-	@Field(() => [User], { 
+	@Field(() => [User], {
 		nullable: true,
-		description: "Users this user has matched with." 
+		description: "Users this user has matched with.",
 	})
-	@Prop({ required: true })
-	matches: Types.Array<User>;
+	@Prop({ default: [] })
+	matches?: Types.Array<User>;
 
 	@Field(() => String, { description: "The user's questionnaire answers." })
 	@Prop({ required: true, index: true })
 	questionnaire: string;
-	
+
 	@Field(() => [String], { description: "The user's hobbies." })
 	@Prop({ required: true, index: true })
 	hobbies: Types.Array<string>;
@@ -95,27 +97,27 @@ export class User {
 	@Prop({ required: true, index: true })
 	courses: Types.Array<string>;
 
-	@Field(() => [Chat], { 
-		nullable: true,
-		description: "The user's chat history." 
-	})
-	@Prop({ required: true, index: true })
-	chats: Types.Array<string>;
+	// @Field(() => [Chat], {
+	// 	nullable: true,
+	// 	description: "The user's chat history.",
+	// })
+	// @Prop({ required: true, index: true })
+	// chats: Types.Array<string>;
 
 	@Field(() => Boolean, { description: "The user's verified status" })
-	@Prop({ required: true })
+	@Prop({ default: false })
 	verified: boolean;
 
-	@Field(() => [Activity], { 
-		nullable: true,
-		description: "The user's activity log." 
-	})
-	@Prop({ required: true })
-	log: Types.Array<Activity>;
+	// @Field(() => [Activity], {
+	// 	nullable: true,
+	// 	description: "The user's activity log.",
+	// })
+	// @Prop({ required: true })
+	// log: Types.Array<Activity>;
 
 	@Field(() => Number, { description: "The user's account status" })
-	@Prop({ required: true, index: true })
-	accountStatus: number; 
+	@Prop({ default: 1, index: true })
+	accountStatus: number;
 }
 
 export const UserModel = getModelForClass(User);
