@@ -1,6 +1,6 @@
 import { Arg, Mutation, Query, Resolver } from "type-graphql";
 import { User, UserModel } from "../models/User";
-import { RegisterUserType, UserResponse } from "../types/UserTypes";
+import { UpdateUserType, RegisterUserType, UserResponse } from "../types/UserTypes";
 
 @Resolver(() => User)
 export class UserResolver {
@@ -29,4 +29,13 @@ export class UserResolver {
 			};
 		}
 	}
+	@Mutation(() => UserResponse, {
+        description: "Updates user.",
+    })
+    async updateUser(
+        @Arg("data", () => UpdateUserType) data: UpdateUserType
+    ) {
+        return UserModel.findByIdAndUpdate(data.id, data, { new: true });
+    }
 }
+
