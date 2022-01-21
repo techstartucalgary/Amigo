@@ -1,7 +1,7 @@
 import { Arg, Mutation, Query, Resolver } from "type-graphql";
 import { User, UserModel } from "../models/User";
-import { RegisterUserType, UserResponse } from "../types/UserTypes";
-import { validateRegister } from "../utils/validate";
+import { UpdateUserType, RegisterUserType, UserResponse } from "../types/UserTypes";
+import { validateRegister, validateUpdate } from "../utils/validate";
 
 @Resolver(() => User)
 export class UserResolver {
@@ -29,4 +29,14 @@ export class UserResolver {
 			};
 		}
 	}
+	@Mutation(() => UserResponse, {
+        description: "Updates user.",
+    })
+    async updateUser(
+        @Arg("data", () => UpdateUserType) data: UpdateUserType) {
+		const errors = validateUpdate(data)
+		if (errors) return { errors };
+        const user = await UserModel.findByIdAndUpdate(data.id, data, { new: true });
+		return user;
+    }
 }

@@ -19,6 +19,7 @@ export class UserResponse {
 
 @InputType()
 export class RegisterUserType {
+
 	@Field(() => String, { description: "The user's first name." })
 	firstName: string;
 
@@ -48,4 +49,22 @@ export class RegisterUserType {
 
 	@Field(() => [String], { description: "The user's courses." })
 	courses: string[];
+}
+
+@InputType()
+export class UpdateUserType {
+	@Field(() => String, { description: "The user's id" })
+	id: string;
+
+	@Field(() => String, { nullable: true, description: "The user's bio." })
+	bio?: string;
+
+	@Field(() => String, { nullable: true, description: "The user's questionnaire answers." })
+	questionnaire?: string;
+
+	@Field(() => [String], { nullable: true, description: "The user's hobbies." })
+	hobbies?: string[];
+
+	@Field(() => [String], { nullable: true, description: "The user's courses." })
+	courses?: string[];
 }
