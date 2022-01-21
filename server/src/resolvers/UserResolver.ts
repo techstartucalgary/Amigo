@@ -2,8 +2,6 @@ import { Arg, Mutation, Query, Resolver } from "type-graphql";
 import { User, UserModel } from "../models/User";
 import { UpdateUserType, RegisterUserType, UserResponse } from "../types/UserTypes";
 import { validateRegister, validateUpdate } from "../utils/validate";
-import { FieldError } from "../types/FieldError";
-import { validateUniversity, validateBio } from "../utils/validate";
 
 @Resolver(() => User)
 export class UserResolver {

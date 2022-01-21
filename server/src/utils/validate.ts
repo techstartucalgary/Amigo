@@ -10,10 +10,6 @@ export const validateUpdate = (data: UpdateUserType) => {
 		const errBio = validateBio(data.bio); 
 		if (errBio) errors.push(errBio); 
 	}
-	if (data.university) { 
-		const errUniversity = validateBio(data.university); 
-		if (errUniversity) errors.push(errUniversity); 
-	}
 	if (errors.length > 0) return { errors }
 }
 
