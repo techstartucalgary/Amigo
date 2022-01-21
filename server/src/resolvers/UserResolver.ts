@@ -1,7 +1,7 @@
 import { Arg, Mutation, Query, Resolver } from "type-graphql";
 import { User, UserModel } from "../models/User";
 import { UpdateUserType, RegisterUserType, UserResponse } from "../types/UserTypes";
-import { validateRegister } from "../utils/validate";
+import { validateRegister, validateUpdate } from "../utils/validate";
 import { FieldError } from "../types/FieldError";
 import { validateUniversity, validateBio } from "../utils/validate";
 
@@ -36,12 +36,8 @@ export class UserResolver {
     })
     async updateUser(
         @Arg("data", () => UpdateUserType) data: UpdateUserType) {
-		const errors: FieldError[] = [];
-		const errBio = validateBio(data.bio!)
-		const errUniversity = validateUniversity(data.university!)
-		if (errUniversity) errors.push(errUniversity);
-		if (errBio) errors.push(errBio);
-		if (errors.length > 0) return { errors };
+		const errors = validateUpdate(data)
+		if (errors) return { errors };
         const user = await UserModel.findByIdAndUpdate(data.id, data, { new: true });
 		return user;
     }

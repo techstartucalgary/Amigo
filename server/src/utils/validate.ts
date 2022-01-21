@@ -2,6 +2,20 @@ import validator from "validator";
 import { FieldError } from "../types/FieldError";
 import { RegisterUserType } from "../types/UserTypes";
 import { Universities } from "../utils/universities";
+import { UpdateUserType } from "../types/UserTypes"
+
+export const validateUpdate = (data: UpdateUserType) => {
+	const errors: FieldError[] = [];
+	if (data.bio) { 
+		const errBio = validateBio(data.bio); 
+		if (errBio) errors.push(errBio); 
+	}
+	if (data.university) { 
+		const errUniversity = validateBio(data.university); 
+		if (errUniversity) errors.push(errUniversity); 
+	}
+	if (errors.length > 0) return { errors }
+}
 
 export const validateRegister = (data: RegisterUserType) => {
 	let errors: FieldError[] = [];
