@@ -35,7 +35,10 @@ export class UserResolver {
     async updateUser(
         @Arg("data", () => UpdateUserType) data: UpdateUserType
     ) {
-        return UserModel.findByIdAndUpdate(data.id, data, { new: true });
+        const user = await UserModel.findByIdAndUpdate(data.id, data, { new: true });
+		return user;
     }
 }
 
+// const user = await UserModel...
+// return {user};
