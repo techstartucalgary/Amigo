@@ -56,12 +56,6 @@ export class UpdateUserType {
 	@Field(() => String, { description: "The user's id" })
 	id: string;
 
-	@Field(() => String, { nullable: true, description: "The user's first name." })
-	firstName?: string;
-
-	@Field(() => String, { nullable: true, description: "The user's last name." })
-	lastName?: string;
-
 	@Field(() => String, { nullable: true, description: "The user's bio." })
 	bio?: string;
 
