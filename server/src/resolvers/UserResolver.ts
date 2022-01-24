@@ -10,6 +10,11 @@ export class UserResolver {
 		return "Hello world!";
 	}
 
+	@Query(() => [User])
+	getUser() {
+		return UserModel.aggregate().sample(15);
+	}
+
 	@Mutation(() => UserResponse, { description: "Register a user" })
 	async register(@Arg("data") data: RegisterUserType) {
 		const errors = validateRegister(data);
