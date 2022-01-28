@@ -1,7 +1,7 @@
 import { Arg, Mutation, Query, Resolver } from "type-graphql";
 import { User, UserModel } from "../models/User";
 import { UpdateUserType, RegisterUserType, UserResponse } from "../types/UserTypes";
-import { validateRegister, validateUpdate, validatePassword } from "../utils/validate";
+import { validateRegister, validateUpdate } from "../utils/validate";
 
 @Resolver(() => User)
 export class UserResolver {
@@ -40,14 +40,12 @@ export class UserResolver {
 		return user;
     }
 
-	@Mutation(() => UserResponse, {
+	@Mutation(() => Boolean, {
         description: "Deletes user.",
     })
     async deleteUser(
-        @Arg("data") data: UpdateUserType) {
-		const errors = validatePassword(data.id)
-		if (errors) return { errors };
-        await UserModel.findByIdAndDelete(data.id);
-		return null;
+        @Arg("id") data: String) {
+        await UserModel.findByIdAndDelete(data);
+		return true;
     }
 }
