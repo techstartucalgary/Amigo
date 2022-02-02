@@ -28,7 +28,7 @@ export class User {
 	lastName: string;
 
 	@Field(() => String, { description: "The user's bio." })
-	@Prop({ required: true, unique: true })
+	@Prop({ required: true })
 	bio: string;
 
 	@Field(() => [String], {
@@ -46,21 +46,12 @@ export class User {
 	@Prop({ required: true, unique: true, index: true })
 	email: string;
 
-	@Field(() => String)
 	@Prop({ required: true })
 	password: string;
 
-	@Field(() => Date, {
-		nullable: true,
-		description: "The last date the user's password was reset.",
-	})
 	@Prop({ default: new Date() })
 	lastPasswordReset?: Date;
 
-	@Field(() => String, {
-		nullable: true,
-		description: "The user's password reset token.",
-	})
 	@Prop()
 	passwordResetCode?: string;
 
