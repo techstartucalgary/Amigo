@@ -24,7 +24,7 @@ export class UserResolver {
 		const errors = validateRegister(data);
 		if (errors) return { errors };
 		try {
-			const user = await UserModel.create(data);
+			const user = await UserModel.create({ ...data, updatedAt: new Date() });
 			return { user };
 		} catch (error) {
 			const field = Object.keys(error.keyValue)[0];
@@ -44,18 +44,21 @@ export class UserResolver {
 	async updateUser(@Arg("data", () => UpdateUserType) data: UpdateUserType) {
 		const errors = validateUpdate(data);
 		if (errors) return { errors };
-		const user = await UserModel.findByIdAndUpdate(data.id, data, {
-			new: true,
-		});
+		const user = await UserModel.findByIdAndUpdate(
+			data.id,
+			{ ...data, updatedAt: new Date() },
+			{
+				new: true,
+			}
+		);
 		return user;
-    }
+	}
 
 	@Mutation(() => Boolean, {
-        description: "Deletes user.",
-    })
-    async deleteUser(
-        @Arg("id") data: String) {
-        await UserModel.findByIdAndDelete(data);
+		description: "Deletes user.",
+	})
+	async deleteUser(@Arg("id") data: String) {
+		await UserModel.findByIdAndDelete(data);
 		return true;
-    }
+	}
 }
