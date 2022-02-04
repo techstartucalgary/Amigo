@@ -109,6 +109,18 @@ export class User {
 	@Field(() => Number, { description: "The user's account status" })
 	@Prop({ default: 1, index: true })
 	accountStatus: number;
+
+	@Field(() => Date, {
+		description: "When the user's account was created.",
+	})
+	@Prop({ default: new Date() })
+	createdAt?: Date;
+
+	@Field(() => Date, {
+		description: "When the user's account was last updated.",
+	})
+	@Prop()
+	updatedAt?: Date;
 }
 
 export const UserModel = getModelForClass(User);
