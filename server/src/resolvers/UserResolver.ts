@@ -43,5 +43,14 @@ export class UserResolver {
 			new: true,
 		});
 		return user;
-	}
+    }
+
+	@Mutation(() => Boolean, {
+        description: "Deletes user.",
+    })
+    async deleteUser(
+        @Arg("id") data: String) {
+        await UserModel.findByIdAndDelete(data);
+		return true;
+    }
 }
