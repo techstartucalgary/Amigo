@@ -113,7 +113,7 @@ export class User {
 	@Field(() => Date, {
 		description: "When the user's account was created.",
 	})
-	@Prop()
+	@Prop({ default: new Date() })
 	createdAt?: Date;
 
 	@Field(() => Date, {
